@@ -19,6 +19,12 @@ class MainActivity : AppCompatActivity() {
 
         // Do a dice roll when the app starts
         rollDice()
+
+        val flipCoin: Button = findViewById(R.id.button2)
+        flipCoin.setOnClickListener { flipCoin() }
+
+        // Do a coin flip when the app starts
+        flipCoin()
     }
 
     // "6" it will always display 6 only used for testing of app
@@ -62,4 +68,35 @@ class MainActivity : AppCompatActivity() {
             return (1..numSides).random()
         }
     }
+
+    private fun flipCoin() {
+        // Create new Coin object with 2 sides and flip it
+        val coin = Coin(2)
+        val coinFlip = coin.flip()
+
+        // Find the ImageView in the layout
+        val coinImage: ImageView = findViewById(R.id.imageView2)
+
+        // Determine which drawable resource ID to use based on the coin flip
+        val drawableResource = when (coinFlip) {
+            1 -> R.drawable.group_1
+            2 -> R.drawable.group_2
+            else -> R.drawable.group_1
+        }
+
+        // Update the ImageView with the correct drawable resource ID
+        coinImage.setImageResource(drawableResource)
+
+        // Update the content description
+        coinImage.contentDescription = coinFlip.toString()
+     }
+
+    class Coin(private val numSides: Int) {
+
+        fun flip(): Int {
+            return (1..numSides).random()
+        }
+    }
+
+
 }
